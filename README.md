@@ -1,0 +1,3 @@
+# LearningCP
+
+Start from ZERO :) 
