@@ -1,15 +1,21 @@
-m, n, a, b = map(int, input().split())
-dp = [[0]*n for _ in range(m)]
-invalid = set()
-C = 10**9+7
-for i in range(m-a, m):
-    for j in range(0, b):
-        invalid.add((i, j))
-dp[0][0] = 1
-for i in range(m):
-    for j in range(n):
-        if (i, j) in invalid: continue
-        if i >= 1: dp[i][j] += dp[i-1][j]
-        if j >= 1: dp[i][j] += dp[i][j-1]
-        dp[i][j] = dp[i][j] % C
-print(dp[-1][-1])
+def C(n, r):
+    if r < 0 or n < r: return 0
+    return fact[n] * ifac[r] * ifac[n-r] % MOD
+
+MOD = 10**9 + 7
+H, W, A, B = map(int, input().split())
+n = H + W
+fact = [1] * n
+ifac = [1] * n
+inv = [1] * n
+for x in range(2, n):
+    inv[x] = inv[MOD % x] * (MOD - MOD // x) % MOD
+    fact[x] = fact[x-1] * x % MOD
+    ifac[x] = ifac[x-1] * inv[x] % MOD
+ans = 0
+for j in range(B, W):
+    ans = (ans + C(H-1-A+j, j) * C(W-j+A-2, A-1)) % MOD
+print(inv)
+print(fact)
+print(ifac)
+print(ans)
